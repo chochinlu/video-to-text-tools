@@ -82,6 +82,9 @@ def main():
             if text:
                 # 將結果保存到文件
                 filename = os.path.join(output_dir, f"{title}.txt")
+                if source == "tiktok":
+                    # 移除第一行
+                    text = "\n".join(text.split("\n")[1:])
                 with open(filename, "w") as output_file:
                     output_file.write(text)
 

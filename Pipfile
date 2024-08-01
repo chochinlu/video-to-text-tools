@@ -8,6 +8,11 @@ pyyaml = "*"
 pytubefix = "*"
 openai-whisper = "*"
 tqdm = "*"
+pyktok = "*"
+browser-cookie3 = "*"
+bs4 = "*"
+pandas = "*"
+tiktokapi = "*"
 
 [dev-packages]
 
