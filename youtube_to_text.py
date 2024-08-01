@@ -1,55 +1,33 @@
 import sys
-import whisper
 import os
 from pytubefix import YouTube
-import yaml
+from common import download_audio, transcribe_audio, clean_up
 
 
-def download_audio(url, output_path):
-    try:
-        yt = YouTube(url)
-
-        audio_file = yt.streams.get_audio_only().download(
-            output_path=os.path.dirname(output_path),
-            filename=os.path.basename(output_path),
-            mp3=True,
-        )
-
-        return audio_file
-    except Exception as e:
-        print(f"Error downloading audio: {e}")
-        return None
-
-
-def transcribe_audio(audio_path):
-    with open("config.yaml", "r") as f:
-        config = yaml.safe_load(f)
-
-    model = whisper.load_model(config["whisper"]["model_size"])
-    result = model.transcribe(audio_path)
-    return result["text"]
+def youtube_downloader(url, output_path):
+    yt = YouTube(url)
+    audio_stream = yt.streams.filter(only_audio=True).first()
+    audio_file = audio_stream.download(
+        output_path=os.path.dirname(output_path),
+        filename=os.path.basename(output_path) + ".mp3",
+    )
+    return audio_file
 
 
 def main(url):
-    # 設置臨時音頻文件路徑
-    temp_audio = "temp_audio"
+    temp_audio = "temp_audio.mp3"
 
     try:
-        # 下載音頻
-        audio_file = download_audio(url, temp_audio)
+        audio_file = download_audio(url, temp_audio, youtube_downloader)
         if not audio_file:
             print("Failed to download audio.")
             return
 
-        # 轉錄音頻
         transcript = transcribe_audio(audio_file)
-        # 輸出轉錄文本
         print(transcript)
 
     finally:
-        # 清理臨時文件
-        if os.path.exists(temp_audio + ".mp3"):
-            os.remove(temp_audio + ".mp3")
+        clean_up(temp_audio)
 
 
 if __name__ == "__main__":

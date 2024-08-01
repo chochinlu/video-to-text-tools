@@ -1,12 +1,12 @@
 import sys
-import whisper
 import os
-import yaml
 import pyktok as pyk
+from common import download_audio, transcribe_audio, clean_up
+import yaml
 import requests
 
 
-def download_audio(url, output_path):
+def tiktok_downloader(url, output_path):
     try:
         tt_json = pyk.alt_get_tiktok_json(url)
         audio_url = tt_json["__DEFAULT_SCOPE__"]["webapp.video-detail"]["itemInfo"][
@@ -23,41 +23,26 @@ def download_audio(url, output_path):
         return None
 
 
-def transcribe_audio(audio_path):
-    with open("config.yaml", "r") as f:
-        config = yaml.safe_load(f)
-
-    model = whisper.load_model(config["whisper"]["model_size"])
-    result = model.transcribe(audio_path)
-    return result["text"]
-
-
 def main(url):
-    # 設置臨時音頻文件路徑
-    temp_audio = "temp_audio"
+    temp_audio = "temp_audio.mp3"
 
     try:
-        # 下載音頻
-        audio_file = download_audio(url, temp_audio)
+        audio_file = download_audio(url, temp_audio, tiktok_downloader)
         if not audio_file:
             print("Failed to download audio.")
             return
 
-        # 轉錄音頻
         transcript = transcribe_audio(audio_file)
-        # 輸出轉錄文本
         print(transcript)
 
     finally:
-        # 清理臨時文件
-        if os.path.exists(temp_audio + ".mp3"):
-            os.remove(temp_audio + ".mp3")
+        clean_up(temp_audio)
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python tiktok_to_text.py <Tiktok_URL>")
+        print("Usage: python tiktok_to_text.py <TikTok_URL>")
         sys.exit(1)
 
-    youtube_url = sys.argv[1]
-    main(youtube_url)
+    tiktok_url = sys.argv[1]
+    main(tiktok_url)
