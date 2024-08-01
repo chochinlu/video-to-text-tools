@@ -4,6 +4,7 @@ import os
 import logging
 import yaml
 from datetime import datetime
+from tqdm import tqdm
 
 
 # 設置日誌
@@ -67,7 +68,7 @@ def main():
     os.makedirs(output_dir, exist_ok=True)
 
     # 處理每個條目
-    for item in data:
+    for item in tqdm(data, desc="Processing videos"):
         try:
             title = item["title"]
             url = item["url"]

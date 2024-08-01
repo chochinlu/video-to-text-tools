@@ -2,6 +2,7 @@ import sys
 import whisper
 import os
 from pytubefix import YouTube
+import yaml
 
 
 def download_audio(url, output_path):
@@ -21,7 +22,10 @@ def download_audio(url, output_path):
 
 
 def transcribe_audio(audio_path):
-    model = whisper.load_model("large")  # 您可以根據需要選擇不同的模型大小
+    with open("config.yaml", "r") as f:
+        config = yaml.safe_load(f)
+
+    model = whisper.load_model(config["whisper"]["model_size"])
     result = model.transcribe(audio_path)
     return result["text"]
 
@@ -39,14 +43,13 @@ def main(url):
 
         # 轉錄音頻
         transcript = transcribe_audio(audio_file)
-
         # 輸出轉錄文本
         print(transcript)
 
     finally:
         # 清理臨時文件
-        if os.path.exists(temp_audio):
-            os.remove(temp_audio)
+        if os.path.exists(temp_audio + ".mp3"):
+            os.remove(temp_audio + ".mp3")
 
 
 if __name__ == "__main__":
