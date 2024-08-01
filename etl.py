@@ -73,6 +73,7 @@ def main():
             title = item["title"]
             url = item["url"]
             source = item["source"]
+            video_id = item["video_id"]
 
             logging.info(f"Processing: {title} from {source}")
 
@@ -81,7 +82,7 @@ def main():
 
             if text:
                 # 將結果保存到文件
-                filename = os.path.join(output_dir, f"{title}.txt")
+                filename = os.path.join(output_dir, f"{source}_{video_id}.txt")
                 if source == "tiktok":
                     # 移除第一行
                     text = "\n".join(text.split("\n")[1:])
