@@ -1,4 +1,5 @@
 input_file: video_source_1.json
 output_directory: texts
+modified_output_directory: modified_texts
 whisper:
   model_size: "base"
