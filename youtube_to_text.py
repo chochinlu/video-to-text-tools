@@ -15,7 +15,7 @@ def youtube_downloader(url, output_path):
 
 
 def main(url):
-    temp_audio = "temp_audio.mp3"
+    temp_audio = "temp_audio"
 
     try:
         audio_file = download_audio(url, temp_audio, youtube_downloader)

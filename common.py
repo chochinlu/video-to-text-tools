@@ -22,5 +22,5 @@ def transcribe_audio(audio_path):
 
 
 def clean_up(file_path):
-    if os.path.exists(file_path):
-        os.remove(file_path)
+    if os.path.exists(file_path + ".mp3"):
+        os.remove(file_path + ".mp3")
