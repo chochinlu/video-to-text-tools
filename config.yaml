@@ -2,4 +2,11 @@ input_file: video_source_1.json
 output_directory: texts
 modified_output_directory: modified_texts
 whisper:
-  model_size: "base"
+  model_size: "large"
+chromadb:
+  path: "chroma.db"
+  embedding_model: "text-embedding-3-large"
+  collection_name: "child_edu"
+text_splitter:
+  chunk_size: 1000
+  overlap_size: 200
