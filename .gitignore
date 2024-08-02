@@ -2,3 +2,11 @@
 *.mp3
 *.log
 *.txt
+*.ipynb
+.env
+__pycache__
+venv
+chroma.db
+
+# Allow requirements.txt
+!requirements.txt
