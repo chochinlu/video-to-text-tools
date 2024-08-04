@@ -90,6 +90,7 @@ orjson==3.10.6
 overrides==7.7.0
 packaging==24.1
 pandas==2.2.2
+playwright==1.45.1
 posthog==3.5.0
 protobuf==4.25.4
 pyasn1==0.6.0
@@ -97,6 +98,7 @@ pyasn1_modules==0.4.0
 pycryptodomex==3.20.0
 pydantic==2.8.2
 pydantic_core==2.20.1
+pyee==11.1.0
 Pygments==2.18.0
 pyktok==0.0.27
 PyPika==0.48.9
@@ -120,6 +122,7 @@ SQLAlchemy==2.0.31
 starlette==0.37.2
 sympy==1.13.1
 tenacity==8.5.0
+TikTokApi==6.4.0
 tiktoken==0.7.0
 tokenizers==0.19.1
 torch==2.3.1
